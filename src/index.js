@@ -44,26 +44,21 @@ function parse(cmd, content) {
   return list;
 }
 
-module.exports = () => command => new Promise((resolve, reject) => {
-  try {
-    const cmd = command.trim().replace(' ', '-');
-    const content = cache.getPage(cmd);
-    if (!content) {
-      cache.update(() => {
-        const c = cache.getPage(cmd);
-        if (!c) {
-          resolve([{
-            icon: 'fa-book',
-            title: `Cannot find document for '${command.trim()}'`,
-          }]);
-        } else {
-          resolve(parse(cmd, c));
-        }
-      });
-    } else {
-      resolve(parse(cmd, content));
+module.exports = () => async (command) => {
+  const cmd = command.trim().replace(' ', '-');
+  const content = await cache.getPage(cmd);
+  if (!content) {
+    await cache.update();
+    const c = await cache.getPage(cmd);
+    if (!c) {
+      return [
+        {
+          icon: 'fa-book',
+          title: `Cannot find document for '${command.trim()}'`,
+        },
+      ];
     }
-  } catch (e) {
-    reject(e);
+    return parse(cmd, c);
   }
-});
+  return parse(cmd, content);
+};

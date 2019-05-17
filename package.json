@@ -9,16 +9,16 @@
   },
   "license": "Unlicense",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.13.1",
-    "eslint-config-airbnb": "^14.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-react": "^6.9.0",
-    "mocha": "^2.5.3"
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "mocha": "^6.1.4"
   },
   "dependencies": {
-    "tldr": "1.7.1"
+    "tldr": "3.2.7"
   }
 }
