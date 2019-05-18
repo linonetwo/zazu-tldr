@@ -44,21 +44,27 @@ function parse(cmd, content) {
   return list;
 }
 
-module.exports = () => async (command) => {
-  const cmd = command.trim().replace(' ', '-');
-  const content = await cache.getPage(cmd);
-  if (!content) {
-    await cache.update();
-    const c = await cache.getPage(cmd);
-    if (!c) {
-      return [
-        {
-          icon: 'fa-book',
-          title: `Cannot find document for '${command.trim()}'`,
-        },
-      ];
+module.exports = pluginContext => async (command) => {
+  try {
+    const cmd = command.trim().replace(' ', '-');
+    const content = await cache.getPage(cmd);
+    if (!content) {
+      await cache.update();
+      const c = await cache.getPage(cmd);
+      if (!c) {
+        return [
+          {
+            icon: 'fa-book',
+            title: `Cannot find document for '${command.trim()}'`,
+          },
+        ];
+      }
+      return parse(cmd, c);
     }
-    return parse(cmd, c);
+    return parse(cmd, content);
+  } catch (error) {
+    if (pluginContext) {
+      pluginContext.console.log('error', 'running tldr', { error, errorString: String(error) });
+    }
   }
-  return parse(cmd, content);
 };
