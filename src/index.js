@@ -66,5 +66,6 @@ module.exports = pluginContext => async (command) => {
     if (pluginContext) {
       pluginContext.console.log('error', 'running tldr', { error, errorString: String(error) });
     }
+    return [];
   }
 };

@@ -1,3 +1,8 @@
 const cache = require('tldr/lib/cache');
 
-module.exports = () => () => cache.update().then(() => 'done');
+module.exports = pluginContext => () => cache
+  .update()
+  .then(() => 'done')
+  .catch((error) => {
+    pluginContext.error(error);
+  });
