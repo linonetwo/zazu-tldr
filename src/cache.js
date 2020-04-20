@@ -1,8 +1,12 @@
-const cache = require('tldr/lib/cache');
+const path = require('path');
+const Cache = require('tldr/lib/cache');
 
-module.exports = pluginContext => () => cache
-  .update()
-  .then(() => 'done')
-  .catch((error) => {
-    pluginContext.error(error);
-  });
+const cache = new Cache({ cache: path.resolve(__filename, '..') });
+
+module.exports = (pluginContext) => () =>
+  cache
+    .update()
+    .then(() => 'done')
+    .catch((error) => {
+      pluginContext.error(error);
+    });
